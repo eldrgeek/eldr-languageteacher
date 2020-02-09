@@ -1,5 +1,5 @@
 {
-  "name": "template",
+  "name": "languageteacher",
   "version": "0.1.0",
   "private": true,
   "main": "src/index.tsx",
@@ -52,5 +52,5 @@
     ]
   },
   "keywords": [],
-  "description": "A demo of overmind with  CodeSanbox.io"
+  "description": ""
 }
