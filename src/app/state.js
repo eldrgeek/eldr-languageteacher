@@ -2,9 +2,9 @@ console.log('loading state');
 export const state = {
   title: 'The application title',
   devState: {
-    stateAttributes: 'fragments,fragm',
-    restoreState: false,
-    saveState: false,
+    stateAttributes: 'fragments,fragmentIndex',
+    restoreState: true,
+    saveState: true,
     logDiags: {
       save: true,
       restore: true,
