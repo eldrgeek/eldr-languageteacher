@@ -32,7 +32,7 @@ export const state = {
   userPlay: true,
   play: true,
   errorMessage: '',
-  errorTimeout: 3000,
+  errorTimeout: 2000,
   currentFragment: ({ fragmentIndex, fragments }) => fragments[fragmentIndex],
   nextFragmentTime: ({ fragmentIndex, fragments }) => {
     const fragment = fragments[fragmentIndex + 1];

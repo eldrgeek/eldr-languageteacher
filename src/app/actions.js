@@ -5,7 +5,7 @@ console.log('loading actions');
 
 export const setErrorMessage = async ({ state, effects }, error) => {
   state.errorMessage = error;
-  effects.clearErrorMessage();
+  effects.translate.clearErrorMessage();
 };
 
 export const clearErrorMessage = ({ state, effects }, error) => {

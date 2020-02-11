@@ -26,39 +26,14 @@ export const storage = (() => {
   };
 })();
 export const translate = (() => {
-  let logSave, logRestore;
+  let clearFunction;
   return {
-    initialize(state) {
-      logSave = state.devState.logDiags.save;
-      logRestore = state.devState.logDiags.restore;
-    },
-    async saveLocalAttribute(attr, value) {
-      if (logSave) console.log('saving ', attr, value);
-      localStorage.setItem(attr, JSON.stringify(value));
+    initialize(clear) {
+      clearFunction = clear;
     },
 
-    getLocalAttribute(attr, value) {
-      let saved = localStorage.getItem(attr);
-      if (logRestore) console.log('recovered', attr, saved, JSON.parse(saved));
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.log(saved);
-        console.log(e);
-        return value;
-      }
-    },
-  };
-})();
-
-export const whoknows = (() => {
-  let clearMessage;
-  return {
-    intialize(state) {
-      // clearMessage = callback;
-    },
     async clearErrorMessage() {
-      setTimeout(clearMessage, 3000);
+      setTimeout(clearFunction, 3000);
     },
     async toTarget(text) {
       let query =
