@@ -44,3 +44,16 @@ export const setMediaTime = ({ state }, time) => {
   state.fragmentIndex = newIndex;
   state.mediaTime = time;
 };
+
+export const fragmentStamp = async ({ state, effects }, time) => {
+  state.fragments[state.fragmentIndex + 1].time = time;
+  let target = await effects.translate.toTarget(
+    state.currrentFragment().source
+  );
+  state.currrentFragment().target = target;
+  nextFragment();
+};
+
+export const ne = ({ state }, time) => {};
+
+export const nex = ({ state }, time) => {};

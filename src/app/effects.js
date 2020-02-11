@@ -28,7 +28,7 @@ export const storage = (() => {
 
 export const translate = (() => {
   return {
-    async toPolish(text) {
+    async toTarget(text) {
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
         encodeURI(text);
