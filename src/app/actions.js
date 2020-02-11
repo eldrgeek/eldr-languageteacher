@@ -3,9 +3,13 @@ console.log('loading actions');
 //   state.newTodoTitle = title;
 // };
 
-export const setErrorMessage = ({ state }, error) => {
+export const setErrorMessage = async ({ state, effects }, error) => {
   state.errorMessage = error;
-  setTimeout(() => (state.errorMessage = ''), state.errorTimeout);
+  effects.clearErrorMessage();
+};
+
+export const clearErrorMessage = ({ state, effects }, error) => {
+  state.errorMessage = '';
 };
 
 export const setFragmentIndex = ({ state }, index) => {
@@ -54,6 +58,10 @@ export const fragmentStamp = async ({ state, effects }, time) => {
   nextFragment();
 };
 
-export const ne = ({ state }, time) => {};
+export const translateFragment = async ({ state, effects }) => {
+  state.currentFragment().target = await effects.translate.toTarget(
+    state.currentFragment().source
+  );
+};
 
 export const nex = ({ state }, time) => {};
