@@ -31,6 +31,8 @@ export const state = {
   mediaTime: 0,
   userPlay: true,
   play: true,
+  errorMessage: '',
+  errorTimeout: 1000,
   currentFragment: ({ fragmentIndex, fragments }) => fragments[fragmentIndex],
   nextFragmentTime: ({ fragmentIndex, fragments }) => {
     const fragment = fragments[fragmentIndex + 1];

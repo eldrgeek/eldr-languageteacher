@@ -20,7 +20,7 @@ const config = {
 const initialize = () => {
   app = createOvermind(config, {
     // devtools: 'penguin.linux.test:8080', //
-    devtools: 'localhost:8080',
+    devtools: 'localhost:3031',
   });
   // if (app.dispose) app.dispose();
   useApp = createHook();

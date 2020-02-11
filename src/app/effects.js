@@ -26,6 +26,23 @@ export const storage = (() => {
   };
 })();
 
+export const translate = (() => {
+  return {
+    async toPolish(text) {
+      let query =
+        'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
+        encodeURI(text);
+      fetch(query)
+        .then(result => {
+          return result.json();
+        })
+        .then(parsed => {
+          return parsed[0][0][0];
+        });
+    },
+  };
+})();
+
 // export const router = {
 //   initialize(routes) {
 //     Object.keys(routes).forEach(url => {
