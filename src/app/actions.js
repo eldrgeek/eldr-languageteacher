@@ -12,20 +12,22 @@ export const clearErrorMessage = ({ state, effects }, error) => {
   state.errorMessage = '';
 };
 
-export const setFragmentIndex = ({ state }, index) => {
+export const setFragmentIndex = ({ state, effects, actions }, index) => {
   if (index < 0) {
-    setErrorMessage('Must be greater than zero');
+    actions.setErrorMessage('Must be greater than zero');
   }
   if ([state.fragments[index] && state.fragments[index].time]) {
     state.fragmentIndex = index;
-    setMediaTime(state.fragments[index].time);
+    actions.setMediaTime(state.fragments[index].time);
   } else {
-    setErrorMessage('Time not set');
+    actions.setErrorMessage('Time not set');
   }
 };
-export const nextFragment = ({ state }) => {
+export const nextFragment = ({ state, actions }) => {
   if (state.fragmentIndex + 1 === state.fragments.length) {
-    setErrorMessage('Must be greater than zero');
+    actions.setErrorMessage("Can't exceed fragments boundary");
+  } else {
+    state.fragmentIndex++;
   }
 };
 export const findMediaIndex = ({ state }, time) => {
