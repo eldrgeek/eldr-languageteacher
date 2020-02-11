@@ -75,4 +75,17 @@ export const translateFragment = async ({ state, effects }) => {
   );
 };
 
-export const nex = ({ state }, time) => {};
+export const appendFragment = ({ state }, fragment) => {
+  let newFragment = {
+    source: fragment,
+    target: null,
+    time: null,
+  };
+  if (state.fragments.length >= 20) return;
+  state.fragments.push(newFragment);
+  // console.log();
+  //  state.fragments = state.fragments.splice(0,0,newFragment);
+  // console.log('fragments', state.fragments);
+};
+
+export const nextly = ({ state }, time) => {};

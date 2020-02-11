@@ -35,6 +35,19 @@ export const translate = (() => {
     async clearErrorMessage() {
       setTimeout(clearFunction, 3000);
     },
+    convertChapter(state, actions, chapter) {
+      const lines = chapter.split('.');
+      let len = lines.length;
+
+      state.fragments = state.fragments.slice(0, state.nToPreserve);
+      if (state.nToConvert !== null) {
+        len = state.nToConvert;
+      }
+      // console.log("convert",len)
+      for (let i = 0; i < len; i++) {
+        actions.appendFragment(lines[i + state.nToPreserve]);
+      }
+    },
     async toTarget(text) {
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +

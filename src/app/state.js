@@ -2,7 +2,8 @@ console.log('loading state');
 export const state = {
   title: 'The application title',
   devState: {
-    stateAttributes: 'fragments,fragmentIndex,mediaTime,userPlay,pause',
+    stateAttributes:
+      'fragments,fragmentIndex,mediaTime,userPlay,pause,nToPreserve,nToConvert',
     restoreState: true,
     saveState: true,
     logDiags: {
@@ -10,6 +11,7 @@ export const state = {
       restore: true,
     },
   },
+
   fragments: [
     {
       time: 0,
@@ -18,15 +20,18 @@ export const state = {
     },
     {
       time: 0.175,
+      target: null,
       source:
         'Byli ostatnimi ludźmi, których można by posądzić o udział w czymś dziwnym lub tajemniczym, bo po prostu nie wierzyli w takie bzdury.',
     },
     {
       time: 2.5,
+      target: null,
       source: 'Pan Dursley był dyrektorem firmy Grunnings produkującej świdry.',
     },
     {
       time: null,
+      target: null,
       source: 'Pan Dursley był dyrektorem firmy Grunnings produkującej świdry.',
     },
   ],
@@ -37,6 +42,8 @@ export const state = {
   pause: true,
   errorMessage: '',
   errorTimeout: 2000,
+  nToConvert: 3,
+  nToPreserve: 3,
   currentFragment: ({ fragmentIndex, fragments }) => fragments[fragmentIndex],
   nextFragmentTime: ({ fragmentIndex, fragments }) => {
     const fragment = fragments[fragmentIndex + 1];
