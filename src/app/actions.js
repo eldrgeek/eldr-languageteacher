@@ -70,8 +70,8 @@ export const fragmentStamp = async ({ state, effects }, time) => {
 };
 
 export const translateFragment = async ({ state, effects }) => {
-  state.currentFragment().target = await effects.translate.toTarget(
-    state.currentFragment().source
+  state.currentFragment.target = await effects.translate.toTarget(
+    state.currentFragment.source
   );
 };
 

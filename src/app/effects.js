@@ -39,7 +39,7 @@ export const translate = (() => {
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
         encodeURI(text);
-      fetch(query)
+      return fetch(query)
         .then(result => {
           return result.json();
         })
