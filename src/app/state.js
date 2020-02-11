@@ -17,12 +17,16 @@ export const state = {
         'Państwo Dursleyowie spod numeru czwartego przy Privet Drive mogli z dumą twierdzić, że są całkowicie normalni, chwała Bogu.',
     },
     {
-      time: 1,
+      time: 0.175,
       source:
         'Byli ostatnimi ludźmi, których można by posądzić o udział w czymś dziwnym lub tajemniczym, bo po prostu nie wierzyli w takie bzdury.',
     },
     {
-      time: 1.5,
+      time: 2.5,
+      source: 'Pan Dursley był dyrektorem firmy Grunnings produkującej świdry.',
+    },
+    {
+      time: null,
       source: 'Pan Dursley był dyrektorem firmy Grunnings produkującej świdry.',
     },
   ],

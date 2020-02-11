@@ -15,8 +15,9 @@ export const clearErrorMessage = ({ state, effects }, error) => {
 export const setFragmentIndex = ({ state, effects, actions }, index) => {
   if (index < 0) {
     actions.setErrorMessage('Must be greater than zero');
+    return;
   }
-  if ([state.fragments[index] && state.fragments[index].time]) {
+  if (state.fragments[index] && state.fragments[index].time != null) {
     state.fragmentIndex = index;
     actions.setMediaTime(state.fragments[index].time);
   } else {
@@ -30,6 +31,14 @@ export const nextFragment = ({ state, actions }) => {
     state.fragmentIndex++;
   }
 };
+
+export const prevFragment = ({ state, actions }) => {
+  if (state.fragmentIndex === 0) {
+    actions.setErrorMessage("Can't go below zero");
+  } else {
+    state.fragmentIndex--;
+  }
+};
 export const findMediaIndex = ({ state }, time) => {
   if (state.fragments[state.fragmentIndex] === time) {
     return state.fragmentIndex;
@@ -38,15 +47,15 @@ export const findMediaIndex = ({ state }, time) => {
     if (state.fragments[i].time === null) {
       return i - 1;
     }
-    if (state.fragments[i].time > setMediaTime) {
+    if (state.fragments[i].time > time) {
       return i - 1;
     }
   }
   return state.fragments.length - 1;
 };
 
-export const setMediaTime = ({ state }, time) => {
-  let newIndex = findMediaIndex(time);
+export const setMediaTime = ({ state, actions }, time) => {
+  let newIndex = actions.findMediaIndex(time);
   state.fragmentIndex = newIndex;
   state.mediaTime = time;
 };
