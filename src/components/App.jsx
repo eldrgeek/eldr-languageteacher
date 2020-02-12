@@ -5,13 +5,15 @@ import Title from './Title';
 import MediaPlayer from './MediaPlayer';
 import Controls from './Controls';
 import TextDisplay from './TextDisplay';
-
+import ErrorMessage from './ErrorMessage';
 const App = () => {
   // const { state, actions } = useApp();
-
+  const keyEvent = event => {
+    console.log('key event', event.key);
+  };
   return (
     <React.Fragment>
-      <section>
+      <section onKeyDown={keyEvent}>
         {/* <header className="header">
         </header> */}
 
@@ -19,7 +21,7 @@ const App = () => {
         <MediaPlayer />
         <Controls />
         <TextDisplay />
-
+        <ErrorMessage />
         <section className="main" />
       </section>
     </React.Fragment>

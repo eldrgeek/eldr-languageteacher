@@ -27,9 +27,16 @@ export const storage = (() => {
 })();
 export const translate = (() => {
   let clearFunction;
+  let mediaRef;
   return {
     initialize(clear) {
       clearFunction = clear;
+    },
+    getMediaRef(ref) {
+      mediaRef = ref;
+    },
+    getMediaTime() {
+      return mediaRef.getCurrentTime();
     },
 
     async clearErrorMessage() {

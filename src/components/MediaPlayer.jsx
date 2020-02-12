@@ -11,7 +11,7 @@ const MediaPlayer = () => {
   const ref = React.createRef();
   const progress = progress => {
     console.log(progress.playedSeconds);
-    console.log('REF', ref.current.getCurrentTime());
+    if (ref && ref.current) console.log('REF', ref.current.getCurrentTime());
   };
 
   return (
