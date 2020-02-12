@@ -93,7 +93,7 @@ export const toggleUserPlay = ({ state }) => {
   state.play = state.userPlay;
 };
 
-export const setPlay = ({ state }, play) => {
+export const setPause = ({ state }, play) => {
   if (play) {
     state.play = state.userPlay;
   } else {

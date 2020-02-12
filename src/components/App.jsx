@@ -2,6 +2,7 @@ import { CurrentModule, React, useApp } from '../CurrentModule';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 import Title from './Title';
+import MediaPlayer from './MediaPlayer';
 const App = () => {
   const { state, actions } = useApp();
 
@@ -10,7 +11,7 @@ const App = () => {
       <section className="todoapp">
         <header className="header">
           <Title />
-          <h2>{state.testValue} </h2>
+          <MediaPlayer />
         </header>
         {/* <MediaPlayer />
 

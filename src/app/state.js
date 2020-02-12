@@ -3,7 +3,7 @@ export const state = {
   title: 'The application title',
   devState: {
     stateAttributes:
-      'fragments,fragmentIndex,mediaTime,userPlay,pause,nToPreserve,nToConvert',
+      'fragments,fragmentIndex,mediaTime,userPlay,play,nToPreserve,nToConvert',
     restoreState: true,
     saveState: true,
     logDiags: {
@@ -39,7 +39,7 @@ export const state = {
   mediaURL: 'https://soundcloud.com/mike-wolf-443507667/harry-potter-part-1',
   mediaTime: 0,
   userPlay: true,
-  pause: true,
+  play: true,
   errorMessage: '',
   errorTimeout: 2000,
   nToConvert: 3,
