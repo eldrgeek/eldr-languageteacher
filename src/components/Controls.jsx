@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+// import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+// import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import FastForwardIcon from '@material-ui/icons/FastForward';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
@@ -25,15 +25,15 @@ export default function Controls() {
       <IconButton color="primary" aria-label="replay">
         <FastRewindIcon />
       </IconButton>
-      <IconButton color="primary" aria-label="replay">
+      {/* <IconButton color="primary" aria-label="replay">
         <NavigateBeforeIcon />
-      </IconButton>
+      </IconButton> */}
       <IconButton aria-label="delete" color="primary">
         {state.play ? <PlayArrowIcon /> : <PauseIcon />}
       </IconButton>
-      <IconButton color="primary" aria-label="replay">
+      {/* <IconButton color="primary" aria-label="replay">
         <NavigateNextIcon />
-      </IconButton>
+      </IconButton> */}
       <IconButton aria-label="play" color="primary">
         <FastForwardIcon />
       </IconButton>

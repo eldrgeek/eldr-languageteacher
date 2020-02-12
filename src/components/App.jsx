@@ -11,6 +11,7 @@ const App = () => {
   const keyEvent = event => {
     console.log('key event', event.key);
   };
+
   return (
     <React.Fragment>
       <section onKeyDown={keyEvent}>

@@ -9,10 +9,10 @@ const useStyles = makeStyles({
   },
 });
 const touchEvent = event => {
-  console.log('touch event', event.target);
+  console.log('touch event', event.target.getAttribute('id'));
 };
 const clickEvent = event => {
-  console.log('click event', event.target);
+  console.log('click event', event.target.getAttribute('id'));
 };
 
 export default function Types(english, polish) {
@@ -26,8 +26,9 @@ export default function Types(english, polish) {
       ? words.split(' ').map((word, i) => (
           <span
             key={initialLetter + i}
+            id={initialLetter + i}
             onClick={clickEvent}
-            onTouchstart={touchEvent}
+            onTouchStart={touchEvent}
           >
             {word}{' '}
           </span>
@@ -37,12 +38,9 @@ export default function Types(english, polish) {
   return (
     <div className={classes.root}>
       <Typography variant="body1" gutterBottom>
-        <div>
-          <MapWords attr="source" />
-        </div>
-        <div>
-          <MapWords attr="target" />
-        </div>
+        <MapWords attr="source" />
+        <br />
+        <MapWords attr="target" />
       </Typography>
     </div>
   );

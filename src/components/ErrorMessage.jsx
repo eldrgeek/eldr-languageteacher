@@ -16,7 +16,7 @@ const ErrorMessage = () => {
     <React.Fragment>
       <div className={classes.root}>
         <Typography variant="body1" gutterBottom>
-          {state.errorMessage ? <div>{state.errorMessage}</div> : ''}
+          {state.errorMessage ? <span>{state.errorMessage}</span> : ''}
         </Typography>
       </div>
     </React.Fragment>

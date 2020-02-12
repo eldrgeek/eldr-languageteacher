@@ -32,7 +32,7 @@ export const translate = (() => {
     initialize(clear) {
       clearFunction = clear;
     },
-    getMediaRef(ref) {
+    setMediaRef(ref) {
       mediaRef = ref;
     },
     getMediaTime() {
