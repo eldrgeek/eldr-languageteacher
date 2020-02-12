@@ -88,4 +88,17 @@ export const appendFragment = ({ state }, fragment) => {
   // console.log('fragments', state.fragments);
 };
 
-export const nextly = ({ state }, time) => {};
+export const toggleUserPlay = ({ state }) => {
+  state.userPlay = !state.userPlay;
+  state.play = state.userPlay;
+};
+
+export const setPlay = ({ state }, play) => {
+  if (play) {
+    state.play = state.userPlay;
+  } else {
+    state.play = false;
+  }
+};
+
+//export const nextly = ({ state }, time) => {};
