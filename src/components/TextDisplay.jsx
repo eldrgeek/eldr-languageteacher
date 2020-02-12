@@ -8,21 +8,30 @@ const useStyles = makeStyles({
     maxWidth: 500,
   },
 });
+const mapWords = attribute => {
+  return state.currentFragment.source
+    .split(' ')
+    .map(word => <span>{word} </span>);
+};
 export default function Types(english, polish) {
   const classes = useStyles();
-  const { state, effects } = useApp();
+  const { state, actions } = useApp();
+  const MapWords = attributes => {
+    const attribute = 'source';
+    const initial = attribute[0];
+    const words = state.currentFragment[attribute];
+    return words
+      ? words.split(' ').map((word, i) => (
+          <span onClick={actions.fragmentStamp} key={initial + i}>
+            {word}{' '}
+          </span>
+        ))
+      : '';
+  };
   return (
     <div className={classes.root}>
       <Typography variant="body1" gutterBottom>
-        {state.currentFragment.source.split(' ').map(word => (
-          <span>{word} </span>
-        ))}
-
-        {state.currentFragment.target
-          ? state.currentFragment.target
-              .split(' ')
-              .map(word => <span>{word}</span>)
-          : ''}
+        <MapWords attr="source" />
       </Typography>
     </div>
   );

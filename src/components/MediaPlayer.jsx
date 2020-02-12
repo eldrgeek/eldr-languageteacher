@@ -8,13 +8,16 @@ const style = {
 
 const MediaPlayer = () => {
   const { state } = useApp();
+  const ref = React.createRef();
   const progress = progress => {
     console.log(progress.playedSeconds);
+    console.log('REF', ref.current.getCurrentTime());
   };
 
   return (
     <div style={style}>
       <ReactPlayer
+        ref={ref}
         controls={false}
         url={state.mediaURL}
         playing={state.play}

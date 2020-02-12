@@ -1,4 +1,8 @@
 let chapter1 = `
+ROZDZIAŁ PIERWSZY.
+
+Chłopiec, który przeżył.
+
 Państwo Dursleyowie spod numeru czwartego przy Privet Drive mogli z dumą twierdzić, że są całkowicie normalni, chwała Bogu. Byli ostatnimi ludźmi, których można by posądzić o udział w czymś dziwnym lub tajemniczym, bo po prostu nie wierzyli w takie bzdury.
 
 Pan Dursley był dyrektorem firmy Grunnings produkującej świdry. Był to rosły, otyły mężczyzna pozbawiony szyi, za to wyposażony w wielkie wąsy. Natomiast pani Dursley była drobną blondynką i miała szyję dwukrotnie dłuższą od normalnej, co bardzo jej pomagało w życiu, ponieważ większość dnia spędzała na podglądaniu sąsiadów. Syn Dursleyów miał na imię Dudley, a rodzice uważali go za najwspanialszego chłopca na świecie.
