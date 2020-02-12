@@ -5,6 +5,7 @@
   "main": "src/index.tsx",
   "dependencies": {
     "@material-ui/core": "4.9.1",
+    "@material-ui/icons": "4.9.1",
     "classnames": "2.2.6",
     "overmind": "22.0.0",
     "overmind-react": "23.0.0",

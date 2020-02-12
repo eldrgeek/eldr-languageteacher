@@ -36,7 +36,7 @@ export const state = {
     },
   ],
   fragmentIndex: 0,
-  mediaURL: 'https://soundcloud.com/mike-wolf-443507667/harry-potter-part-1',
+  mediaURL: 'https://youtu.be/mq3I8qb1MM4', //'https://soundcloud.com/mike-wolf-443507667/harry-potter-part-1',
   mediaTime: 0,
   userPlay: true,
   play: true,
@@ -51,3 +51,4 @@ export const state = {
     return fragment.time;
   },
 };
+//https://youtu.be/mq3I8qb1MM4////

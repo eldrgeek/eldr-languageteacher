@@ -2,11 +2,12 @@ import ReactPlayer from 'react-player';
 import { CurrentModule, React, useApp } from '../CurrentModule';
 
 const style = {
-  height: '500px',
-  width: '100px',
+  display: 'block',
+  // background: 'red',
 };
+
 const MediaPlayer = () => {
-  const { state, actions } = useApp();
+  const { state } = useApp();
   const progress = progress => {
     console.log(progress.playedSeconds);
   };
@@ -14,7 +15,7 @@ const MediaPlayer = () => {
   return (
     <div style={style}>
       <ReactPlayer
-        // controls={false}
+        controls={false}
         url={state.mediaURL}
         playing={state.play}
         volume={1}
@@ -28,3 +29,4 @@ const MediaPlayer = () => {
 };
 
 export default MediaPlayer;
+CurrentModule(MediaPlayer);

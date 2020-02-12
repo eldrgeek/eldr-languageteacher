@@ -1,21 +1,25 @@
-import { CurrentModule, React, useApp } from '../CurrentModule';
+import { CurrentModule, React } from '../CurrentModule';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 import Title from './Title';
 import MediaPlayer from './MediaPlayer';
+import Controls from './Controls';
+import TextDisplay from './TextDisplay';
+
 const App = () => {
-  const { state, actions } = useApp();
+  // const { state, actions } = useApp();
 
   return (
     <React.Fragment>
-      <section className="todoapp">
-        <header className="header">
-          <Title />
-          <MediaPlayer />
-        </header>
-        {/* <MediaPlayer />
+      <section>
+        {/* <header className="header">
+        </header> */}
 
-        <TranslationDisplay /> */}
+        {/* <Title /> */}
+        <MediaPlayer />
+        <Controls />
+        <TextDisplay />
+
         <section className="main" />
       </section>
     </React.Fragment>
