@@ -58,8 +58,8 @@ export const state = {
   play: false,
   errorMessage: '',
   errorTimeout: 2000,
-  nToConvert: 3,
-  nToPreserve: 3,
+  nToConvert: 0,
+  nToPreserve: 6,
   currentFragment: ({ fragmentIndex, fragments }) => fragments[fragmentIndex],
   nextFragmentTime: ({ fragmentIndex, fragments }) => {
     const fragment = fragments[fragmentIndex + 1];

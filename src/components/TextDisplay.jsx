@@ -15,13 +15,29 @@ const clickEvent = event => {
   console.log('click event', event.target.getAttribute('id'));
 };
 
-export default function Types(english, polish) {
+export default function TextDisplay(english, polish) {
   const classes = useStyles();
   const { state, actions } = useApp();
+  React.useEffect(() => {
+    const handleSpace = event => {
+      console.log(event.keyCode);
+      if (event.keyCode === 32) {
+        actions.setErrorMessage('stamp time');
+        actions.fragmentStampTime();
+      }
+    };
+
+    window.addEventListener('keydown', handleSpace);
+
+    return () => {
+      window.removeEventListener('keydown', handleSpace);
+    };
+  }, [actions]);
   const MapWords = props => {
     const attribute = props.attr;
     const initialLetter = attribute[0];
     const words = state.currentFragment[attribute];
+    console.log('words', words);
     return words
       ? words.split(' ').map((word, i) => (
           <span
@@ -46,4 +62,4 @@ export default function Types(english, polish) {
   );
 }
 
-// CurrentModule(Types);
+CurrentModule(TextDisplay);

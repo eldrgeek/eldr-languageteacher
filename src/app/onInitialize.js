@@ -10,4 +10,7 @@ export const onInitialize = ({ state, actions, effects }, instance) => {
   doAttrs(state, 'restoreState', initializeAttr);
   effects.translate.convertChapter(state, actions, text);
   actions.translateFragment();
+  if (state.play) {
+    actions.computeTimeout();
+  }
 };

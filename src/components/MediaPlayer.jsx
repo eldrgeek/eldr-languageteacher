@@ -7,14 +7,13 @@ const style = {
 };
 
 const MediaPlayer = () => {
-  const { state, actions, effects } = useApp();
+  const { state, effects } = useApp();
   const ref = React.createRef();
   React.useEffect(() => {
     effects.translate.setMediaRef(ref.current);
   });
   const progress = progress => {
     console.log(progress.playedSeconds);
-    actions.setErrorMessage('playing ');
     // if (ref && ref.current) console.log('REF', ref.current.getCurrentTime());
   };
 

@@ -28,6 +28,7 @@ export const storage = (() => {
 export const translate = (() => {
   let clearFunction;
   let mediaRef;
+  let timeOut;
   return {
     initialize(clear) {
       clearFunction = clear;
@@ -37,6 +38,19 @@ export const translate = (() => {
     },
     getMediaTime() {
       return mediaRef.getCurrentTime();
+    },
+    clearMediaTimeout(time) {
+      if (!timeOut) clearTimeout(timeOut);
+      timeOut = null;
+    },
+    setMediaTimeout(callback, timeout) {
+      translate.clearMediaTimeout();
+      // const timeRoutine = () => {
+      //   console.log("Timer went off", callback)
+      //   // callback()
+      //   console.log("returned from callback")
+      // }
+      timeOut = setTimeout(callback, timeout);
     },
 
     async clearErrorMessage() {
@@ -59,13 +73,19 @@ export const translate = (() => {
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
         encodeURI(text);
+      // console.log(query
+      // asdf
+
+      return 'Text not translated';
       return fetch(query)
         .then(result => {
+          console.log(result);
           return result.json();
         })
         .then(parsed => {
           return parsed[0][0][0];
-        });
+        })
+        .catch(e => console.log('Error ', e));
     },
   };
 })();

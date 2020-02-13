@@ -8,6 +8,8 @@ import PauseIcon from '@material-ui/icons/Pause';
 
 import FastForwardIcon from '@material-ui/icons/FastForward';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
+import Typography from '@material-ui/core/Typography';
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -18,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Controls() {
   const classes = useStyles();
-  const { state } = useApp();
+  const { state, actions } = useApp();
   return (
     <div className={classes.root}>
       {/* <h1>this is hs</h1> */}
@@ -28,8 +30,12 @@ export default function Controls() {
       {/* <IconButton color="primary" aria-label="replay">
         <NavigateBeforeIcon />
       </IconButton> */}
-      <IconButton aria-label="delete" color="primary">
-        {state.play ? <PlayArrowIcon /> : <PauseIcon />}
+      <IconButton
+        onClick={actions.toggleUserPlay}
+        aria-label="delete"
+        color="primary"
+      >
+        {!state.play ? <PlayArrowIcon /> : <PauseIcon />}
       </IconButton>
       {/* <IconButton color="primary" aria-label="replay">
         <NavigateNextIcon />
@@ -37,6 +43,7 @@ export default function Controls() {
       <IconButton aria-label="play" color="primary">
         <FastForwardIcon />
       </IconButton>
+      {state.mediaTime}
     </div>
   );
 }

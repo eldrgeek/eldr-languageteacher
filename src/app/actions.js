@@ -40,6 +40,9 @@ export const nextFragment = ({ state, actions }) => {
 export const prevFragment = ({ state, actions }) => {
   actions.setFragmentIndex(state.fragmentIndex - 1);
 };
+
+/* find the media index for a time such that the index
+has the last time prior to the time */
 export const findMediaIndex = ({ state }, time) => {
   if (state.fragments[state.fragmentIndex] === time) {
     return state.fragmentIndex;
@@ -62,16 +65,14 @@ export const setMediaTime = ({ state, actions }, time) => {
 };
 
 export const fragmentStampTime = ({ actions, effects }) => {
-  actions.fragmentStamp(effects.getMediaTime());
+  actions.fragmentStamp(effects.translate.getMediaTime());
 };
 
-export const fragmentStamp = async ({ state, effects }, time) => {
+export const fragmentStamp = async ({ state, actions, effects }, time) => {
   state.fragments[state.fragmentIndex + 1].time = time;
-  let target = await effects.translate.toTarget(
-    state.currrentFragment().source
-  );
-  state.currrentFragment().target = target;
-  nextFragment();
+  let target = await effects.translate.toTarget(state.currentFragment.source);
+  state.currentFragment.target = target;
+  actions.nextFragment();
 };
 
 export const translateFragment = async ({ state, effects }) => {
@@ -106,16 +107,31 @@ export const setPlay = ({ state, actions, effects }, play) => {
     }
   } else {
     state.play = false;
-    effects.clearMediaTimeout();
+    effects.translate.clearMediaTimeout();
   }
 };
 
-export const computeTimeout = ({ state, effects }) => {
+export const timeoutTriggered = ({ state, effects, actions }) => {
   const timeNow = effects.translate.getMediaTime();
   const nextTime = state.nextFragmentTime;
+  if (nextTime - timeNow < 0.5) {
+    state.fragmentIndex++;
+    actions.setMediaTime(nextTime);
+  } else {
+    actions.setMediaTime(timeNow);
+  }
+  actions.computeTimeout();
+};
+export const computeTimeout = ({ state, effects, actions }) => {
+  const timeNow = effects.translate.getMediaTime();
+  const nextTime = state.nextFragmentTime;
+  let delta = nextTime - timeNow;
   if (nextTime === null) return;
   if (!state.play) return;
-  effects.setMediaTimeout((nextTime - timeNow) * 1000);
+  if (delta > 1) delta = 1;
+  effects.translate.setMediaTimeout(actions.timeoutTriggered, delta * 1000);
 };
+
+export const checkTransport = ({ state }, time) => {};
 
 //export const nextly = ({ state }, time) => {};
