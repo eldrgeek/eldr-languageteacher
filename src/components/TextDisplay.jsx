@@ -54,9 +54,9 @@ export default function TextDisplay(english, polish) {
   return (
     <div className={classes.root}>
       <Typography variant="body1" gutterBottom>
-        <MapWords attr="source" />
-        <br />
         <MapWords attr="target" />
+        <hr />
+        <MapWords attr="source" />
       </Typography>
     </div>
   );

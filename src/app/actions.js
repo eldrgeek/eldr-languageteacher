@@ -62,6 +62,7 @@ export const findMediaIndex = ({ state }, time) => {
 };
 
 export const setMediaTime = ({ state, actions }, time) => {
+  time = Math.floor(time);
   let newIndex = actions.findMediaIndex(time);
   state.fragmentIndex = newIndex;
   state.mediaTime = time;
@@ -73,9 +74,8 @@ export const fragmentStampTime = ({ actions, effects }) => {
 
 export const fragmentStamp = async ({ state, actions, effects }, time) => {
   state.fragments[state.fragmentIndex + 1].time = time;
-  let target = await effects.translate.toTarget(state.currentFragment.source);
-  state.currentFragment.target = target;
   actions.nextFragment();
+  actions.translateFragment();
 };
 
 export const translateFragment = async ({ state, effects }) => {

@@ -51,7 +51,7 @@ export default function Controls() {
       >
         <FastForwardIcon />
       </IconButton>
-      {state.mediaTime}
+      {Math.floor(state.mediaTime)}
     </div>
   );
 }

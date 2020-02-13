@@ -4,7 +4,7 @@ export const state = {
   devState: {
     stateAttributes:
       'fragments,fragmentIndex,mediaTime,userPlay,play,nToPreserve,nToConvert',
-    restoreState: false,
+    restoreState: true,
     saveState: true,
     logDiags: {
       save: true,
@@ -58,7 +58,7 @@ export const state = {
   play: false,
   errorMessage: '',
   errorTimeout: 2000,
-  nToConvert: 0,
+  nToConvert: 3,
   nToPreserve: 6,
   currentFragment: ({ fragmentIndex, fragments }) => fragments[fragmentIndex],
   nextFragmentTime: ({ fragmentIndex, fragments }) => {
