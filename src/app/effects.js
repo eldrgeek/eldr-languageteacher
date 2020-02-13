@@ -33,12 +33,16 @@ export const translate = (() => {
     initialize(clear) {
       clearFunction = clear;
     },
+    getMediaRef() {
+      return mediaRef;
+    },
     setMediaRef(ref) {
       mediaRef = ref;
     },
     getMediaTime() {
       return mediaRef.getCurrentTime();
     },
+
     clearMediaTimeout(time) {
       if (!timeOut) clearTimeout(timeOut);
       timeOut = null;
@@ -70,13 +74,14 @@ export const translate = (() => {
       }
     },
     async toTarget(text) {
+      console.log('translate', text);
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
         encodeURI(text);
       // console.log(query
       // asdf
 
-      return 'Text not translated';
+      // return 'Text not translated';
       return fetch(query)
         .then(result => {
           console.log(result);
@@ -85,7 +90,10 @@ export const translate = (() => {
         .then(parsed => {
           return parsed[0][0][0];
         })
-        .catch(e => console.log('Error ', e));
+        .catch(e => {
+          console.log('Error ', e);
+          return 'Translation service down';
+        });
     },
   };
 })();

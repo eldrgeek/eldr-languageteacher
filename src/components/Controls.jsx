@@ -24,7 +24,11 @@ export default function Controls() {
   return (
     <div className={classes.root}>
       {/* <h1>this is hs</h1> */}
-      <IconButton color="primary" aria-label="replay">
+      <IconButton
+        onClick={actions.prevFragment}
+        color="primary"
+        aria-label="replay"
+      >
         <FastRewindIcon />
       </IconButton>
       {/* <IconButton color="primary" aria-label="replay">
@@ -40,7 +44,11 @@ export default function Controls() {
       {/* <IconButton color="primary" aria-label="replay">
         <NavigateNextIcon />
       </IconButton> */}
-      <IconButton aria-label="play" color="primary">
+      <IconButton
+        onClick={actions.nextFragment}
+        aria-label="play"
+        color="primary"
+      >
         <FastForwardIcon />
       </IconButton>
       {state.mediaTime}

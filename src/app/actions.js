@@ -29,16 +29,19 @@ export const setFragmentIndex = ({ state, effects, actions }, index) => {
   if (state.fragments[index] && state.fragments[index].time != null) {
     state.fragmentIndex = index;
     actions.setMediaTime(state.fragments[index].time);
+    actions.translateFragment();
   } else {
     actions.setErrorMessage('Time not set');
   }
 };
 export const nextFragment = ({ state, actions }) => {
   actions.setFragmentIndex(state.fragmentIndex + 1);
+  actions.seekToMediaTime();
 };
 
 export const prevFragment = ({ state, actions }) => {
   actions.setFragmentIndex(state.fragmentIndex - 1);
+  actions.seekToMediaTime();
 };
 
 /* find the media index for a time such that the index
@@ -76,9 +79,10 @@ export const fragmentStamp = async ({ state, actions, effects }, time) => {
 };
 
 export const translateFragment = async ({ state, effects }) => {
-  state.currentFragment.target = await effects.translate.toTarget(
-    state.currentFragment.source
-  );
+  if (!state.currentFragment.target)
+    state.currentFragment.target = await effects.translate.toTarget(
+      state.currentFragment.source
+    );
 };
 
 export const appendFragment = ({ state }, fragment) => {
@@ -133,5 +137,7 @@ export const computeTimeout = ({ state, effects, actions }) => {
 };
 
 export const checkTransport = ({ state }, time) => {};
-
+export const seekToMediaTime = ({ state, effects }, time) => {
+  effects.translate.getMediaRef().seekTo(state.mediaTime, 'seconds');
+};
 //export const nextly = ({ state }, time) => {};
