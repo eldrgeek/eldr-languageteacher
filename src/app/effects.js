@@ -1,5 +1,6 @@
 // import page from 'page';
-console.log('loading effects!');
+console.log('loading effects');
+
 export const storage = (() => {
   let logSave, logRestore;
   return {
@@ -18,13 +19,12 @@ export const storage = (() => {
       try {
         return JSON.parse(saved);
       } catch (e) {
-        console.log(saved);
-        console.log(e);
         return value;
       }
     },
   };
 })();
+
 export const translate = (() => {
   let clearFunction;
   let mediaRef;
@@ -56,7 +56,6 @@ export const translate = (() => {
       // }
       timeOut = setTimeout(callback, timeout);
     },
-
     async clearErrorMessage() {
       setTimeout(clearFunction, 3000);
     },

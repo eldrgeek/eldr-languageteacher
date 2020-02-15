@@ -13,7 +13,7 @@ const MediaPlayer = () => {
     effects.translate.setMediaRef(ref.current);
   });
   const progress = progress => {
-    console.log(progress.playedSeconds);
+    // console.log(progress.playedSeconds);
     // if (ref && ref.current) console.log('REF', ref.current.getCurrentTime());
   };
 
@@ -28,7 +28,7 @@ const MediaPlayer = () => {
         width="50vw"
         height="50vh"
         onProgress={progress}
-        onReady={() => console.log('ready now')}
+        // onReady={() => console.log('ready now')}
       />
     </div>
   );

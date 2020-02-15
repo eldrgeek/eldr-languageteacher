@@ -37,7 +37,7 @@ export default function TextDisplay(english, polish) {
     const attribute = props.attr;
     const initialLetter = attribute[0];
     const words = state.currentFragment[attribute];
-    console.log('words', words);
+    // console.log('words', words);
     return words
       ? words.split(' ').map((word, i) => (
           <span
@@ -55,7 +55,9 @@ export default function TextDisplay(english, polish) {
     <div className={classes.root}>
       <Typography variant="body1" gutterBottom>
         <MapWords attr="target" />
-        <hr />
+      </Typography>
+      <hr />
+      <Typography variant="body1" gutterBottom>
         <MapWords attr="source" />
       </Typography>
     </div>

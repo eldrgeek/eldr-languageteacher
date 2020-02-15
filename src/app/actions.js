@@ -1,3 +1,5 @@
+import { statemanager } from './statemanager';
+
 console.log('loading actions');
 // export const changeNewTodoTitle = ({ state }, title) => {
 //   state.newTodoTitle = title;
@@ -8,6 +10,8 @@ console.log('loading actions');
    a time interval set in state.errorTimeout
 
 */
+
+console.log(!statemanager);
 export const setErrorMessage = async ({ state, effects }, error) => {
   state.errorMessage = error;
   effects.translate.clearErrorMessage();
@@ -126,6 +130,7 @@ export const timeoutTriggered = ({ state, effects, actions }) => {
   }
   actions.computeTimeout();
 };
+
 export const computeTimeout = ({ state, effects, actions }) => {
   const timeNow = effects.translate.getMediaTime();
   const nextTime = state.nextFragmentTime;
