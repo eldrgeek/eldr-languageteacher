@@ -18,12 +18,12 @@ const config = {
 };
 statemanager.computeScalarStates(state);
 console.log('About to initialize');
-const initialize = () => {
+const initialize = async () => {
   app = createOvermind(config, {
     // devtools: 'penguin.linux.test:8080', //
     devtools: 'localhost:3031',
   });
-  statemanager.saveAttrs();
+  // statemanager.saveAttrs(config);
   statemanager.makeReactions(app);
 };
 console.log('End of initialize', app);
@@ -31,32 +31,26 @@ console.log('End of initialize', app);
 // if (app.dispose) app.dispose();
 useApp = createHook();
 
-// app.dispose = () => effects.storage.saveLocalAttributes(config.state);
+initialize();
 
-// { nested: true }
+// if (!module.hot) {
+//   //   console.log("not hot")
+//   //   initialize();
+//   initialize();
+// } else {
+//   if (!module.hot.data) {
+//     console.log('no hot data');
+//     initialize();
 
-// const errorHandler = e => {
-//   debugger;
-//   console.log('Hot module error');
-// };
-if (!module.hot) {
-  //   console.log("not hot")
-  //   initialize();
-  initialize();
-} else {
-  if (!module.hot.data) {
-    console.log('no hot data');
-    initialize();
-
-    module.hot.dispose(data => {
-      console.log('setting up dispoase');
-      data.app = app;
-      data.useApp = useApp;
-    });
-  } else {
-    console.log('restoring what was disposed');
-    app = module.hot.data.app;
-    useApp = module.hot.data.useApp;
-    // module.hot.accept(errorHandler);
-  }
-}
+//     module.hot.dispose(data => {
+//       console.log('setting up dispoase');
+//       data.app = app;
+//       data.useApp = useApp;
+//     });
+//   } else {
+//     console.log('restoring what was disposed');
+//     app = module.hot.data.app;
+//     useApp = module.hot.data.useApp;
+//     // module.hot.accept(errorHandler);
+//   }
+// }

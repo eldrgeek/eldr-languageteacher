@@ -1,4 +1,3 @@
-import fragments from '../data/fragments';
 console.log('loading statemanager');
 
 export const statemanager = (() => {
@@ -16,42 +15,46 @@ export const statemanager = (() => {
       } else {
         //automatically create the list to save
         scalarStates = Object.keys(state).filter(
-          key => typeof (state[key] !== 'function') && key !== 'devState'
+          e => typeof state[e] !== 'function' && e !== 'devState'
         );
-        state.devState.stateAttributes = scalarStates.join(',');
+        // console.log(scalarStates);
       }
+      state.devState.stateAttributes = scalarStates.join(',');
     },
-    /*
+    /* save the state and effects for use within this module
+    Restore all the attributes that have been saved, and 
      */
-    init(context) {
+    async process(context) {
       state = context.state;
       effects = context.effects;
       //stateAttributes must have been set by call to computeScalarStates
       attributes = state.devState.stateAttributes.split(',');
-      savedAttributes = effects.storage.getLocalAttribute('savedAttributes');
+      savedAttributes = await effects.storage.getLocalAttribute(
+        'savedAttributes'
+      );
       if (!savedAttributes) savedAttributes = [];
-      this.restoreAttrs();
-
-      // this.saveAttrs();
-      // savedAttributes = attributes;
-      // effects.storage.saveLocalAttribute('savedAttributes', savedAttributes);
+      // await actions.restoreSavedAttrs();
+      // this.restoreSavedAttrs();
     },
 
-    saveAttrs() {
-      if (!state.devState.saveState) return;
-      attributes.forEach(attr =>
-        effects.storage.saveLocalAttribute(attr, state[attr])
-      );
-      savedAttributes = attributes;
+    async saveAttrs() {
+      if (state.devState.saveState) {
+        attributes.forEach(attr =>
+          effects.storage.saveLocalAttribute(attr, state[attr])
+        );
+        savedAttributes = attributes;
+      } else {
+        savedAttributes = [];
+      }
       effects.storage.saveLocalAttribute('savedAttributes', savedAttributes);
     },
-    restoreAttrs() {
-      state.fragments = fragments;
+    restoreSavedAttrs() {
       if (!state.devState.restoreState) return;
       savedAttributes.forEach(
         attr => (state[attr] = effects.storage.getLocalAttribute(attr))
       );
     },
+
     makeReactions(app) {
       if (attributes) attributes.forEach(attr => this.makeReaction(app, attr));
     },

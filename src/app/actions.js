@@ -1,5 +1,3 @@
-import { statemanager } from './statemanager';
-
 console.log('loading actions');
 // export const changeNewTodoTitle = ({ state }, title) => {
 //   state.newTodoTitle = title;
@@ -11,7 +9,6 @@ console.log('loading actions');
 
 */
 
-console.log(!statemanager);
 export const setErrorMessage = async ({ state, effects }, error) => {
   state.errorMessage = error;
   effects.translate.clearErrorMessage();

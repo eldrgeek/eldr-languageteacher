@@ -73,7 +73,7 @@ export const translate = (() => {
       }
     },
     async toTarget(text) {
-      console.log('translate', text);
+      // console.log('translate', text);
       let query =
         'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pl&tl=en&dt=t&q=' +
         encodeURI(text);
@@ -83,7 +83,6 @@ export const translate = (() => {
       // return 'Text not translated';
       return fetch(query)
         .then(result => {
-          console.log(result);
           return result.json();
         })
         .then(parsed => {
