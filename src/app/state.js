@@ -19,6 +19,16 @@ export const state = {
     if (!fragment) return null;
     return fragment.time;
   },
+  devState: {
+    stateAttributes: null, //"title,fragments,fragmentIndex,mediaURL,mediaTime,userPlay,play,errorMessage,errorTimeout,nToConvert,nToPreserve",
+    //'fragments,fragmentIndex,mediaTime,userPlay,play,nToPreserve,nToConvert',
+    restoreState: true,
+    saveState: true,
+    logDiags: {
+      save: true,
+      restore: true,
+    },
+  },
 };
 state.fragments = fragments;
 //https://youtu.be/mq3I8qb1MM4////

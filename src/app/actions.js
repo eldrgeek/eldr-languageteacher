@@ -1,13 +1,7 @@
-console.log('loading actions');
-// export const changeNewTodoTitle = ({ state }, title) => {
-//   state.newTodoTitle = title;
-// };
-
-/* Set and clear an error message 
-   Sets an error message, that clears after
-   a time interval set in state.errorTimeout
-
-*/
+// console.log('loading actions');
+// // export const changeNewTodoTitle = ({ state }, title) => {
+// //   state.newTodoTitle = title;
+// // };
 
 export const setErrorMessage = async ({ state, effects }, error) => {
   state.errorMessage = error;

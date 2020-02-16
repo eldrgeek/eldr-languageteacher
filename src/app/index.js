@@ -3,9 +3,8 @@ import { state } from './state';
 import { onInitialize } from './onInitialize';
 import * as actions from './actions';
 import * as effects from './effects';
-import { createOvermind } from 'overmind';
-import { createOvermind as createOvermind1 } from './statemanager';
-import { statemanager } from './statemanager';
+
+import { createOvermind } from './statemanager';
 // import { VALUE } from 'proxy-state-tree';
 export let useApp;
 export let app;
@@ -18,23 +17,12 @@ const config = {
 };
 
 const initialize = () => {
-  config.state.devState = statemanager.getDevState();
-  statemanager.computeScalarStates(config.state);
-
   app = createOvermind(config, {
     // devtools: 'penguin.linux.test:8080', //
     devtools: 'localhost:3031',
   });
-  statemanager.makeReactions(app);
 };
-
-const initialize1 = () => {
-  app = createOvermind1(config, {
-    // devtools: 'penguin.linux.test:8080', //
-    devtools: 'localhost:3031',
-  });
-};
-initialize1();
+initialize();
 
 // if (app.dispose) app.dispose();
 useApp = createHook();

@@ -1,127 +1,120 @@
 import { createOvermind as originalOvermind } from 'overmind';
-import { onInitialize } from './onInitialize';
 console.log('loading statemanager');
-export const statemanager = (() => {
-  let state, effects;
-  let scalarStates;
-  let attributes;
-  let savedAttributes;
-  const devState = {
-    stateAttributes: null, //"title,fragments,fragmentIndex,mediaURL,mediaTime,userPlay,play,errorMessage,errorTimeout,nToConvert,nToPreserve",
-    //'fragments,fragmentIndex,mediaTime,userPlay,play,nToPreserve,nToConvert',
-    restoreState: true,
-    saveState: true,
-    logDiags: {
-      save: true,
-      restore: true,
-    },
-  };
-  return {
-    /*Get the names of the state variables that are not functions
+
+class StateManager {
+  constructor({ state, actions, effects }) {
+    this.state = state;
+    this.actions = actions;
+    this.effects = effects;
+    console.log('Constructor', state, actions.se, effects);
+    // this.state.devState = StateManager.devState;
+  }
+  computeScalarStates() {
+    const state = this.state;
+    if (this.state.devState.stateAttributes !== null) {
+      this.scalarStates = this.state.devState.stateAttributes.split(',');
+    } else {
+      //automatically create the list to save
+      this.scalarStates = Object.keys(state).filter(
+        e => typeof state[e] !== 'function' && e !== 'devState'
+      );
+      // console.log(scalarStates);
+    }
+    this.state.devState.stateAttributes = this.scalarStates.join(',');
+  }
+
+  /*Get the names of the state variables that are not functions
     Must be called with state before createOvermind
     Sets stateAttributes to this list if it is null */
-    getDevState() {
-      return devState;
-    },
-    async saveLocalAttribute(attr, value) {
-      if (devState.logSave) console.log('saving ', attr, value);
-      localStorage.setItem(attr, JSON.stringify(value));
-    },
 
-    getLocalAttribute(attr, value) {
-      let saved = localStorage.getItem(attr);
-      if (devState.logRestore)
-        console.log('recovered', attr, saved, JSON.parse(saved));
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return value;
-      }
-    },
+  async saveLocalAttribute(attr, value) {
+    if (this.state.devState.logSave) console.log('saving ', attr, value);
+    localStorage.setItem(attr, JSON.stringify(value));
+  }
 
-    computeScalarStates(state) {
-      if (state.devState.stateAttributes !== null) {
-        scalarStates = state.devState.stateAttributes.split(',');
-      } else {
-        //automatically create the list to save
-        scalarStates = Object.keys(state).filter(
-          e => typeof state[e] !== 'function' && e !== 'devState'
-        );
-        // console.log(scalarStates);
-      }
-      state.devState.stateAttributes = scalarStates.join(',');
-    },
-    /* save the state and effects for use within this module
+  getLocalAttribute(attr, value) {
+    let saved = localStorage.getItem(attr);
+    if (this.state.devState.logRestore)
+      console.log('recovered', attr, saved, JSON.parse(saved));
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      return value;
+    }
+  }
+
+  /* save the state and effects for use within this module
     Restore all the attributes that have been saved, and 
      */
-    process(context) {
-      console.log('process', context);
-      state = context.state;
-      effects = context.effects;
-      console.log('getState', context.state, state.devState.stateAttributes);
-      //stateAttributes must have been set by call to computeScalarStates
-      attributes = state.devState.stateAttributes.split(',');
-      savedAttributes = this.getLocalAttribute('savedAttributes');
-      if (!savedAttributes) savedAttributes = [];
-      if (!state.devState.restoreState) return;
-      savedAttributes.forEach(
-        attr => (state[attr] = this.getLocalAttribute(attr))
-      ); // await actions.restoreSavedAttrs();
-      // this.restoreSavedAttrs();
-    },
+  process() {
+    console.log('process', context);
+    console.log('getState', context.state, state.devState.stateAttributes);
+    //stateAttributes must have been set by call to computeScalarStates
+    this.attributes = state.devState.stateAttributes.split(',');
+    this.savedAttributes = this.getLocalAttribute('savedAttributes');
+    if (!this.savedAttributes) this.savedAttributes = [];
+    if (!this.state.devState.restoreState) return;
+    this.savedAttributes.forEach(
+      attr => (this.state[attr] = this.getLocalAttribute(attr))
+    ); // await actions.restoreSavedAttrs();
+    // this.restoreSavedAttrs();
+  }
 
-    async saveAttrs() {
-      if (state.devState.saveState) {
-        attributes.forEach(attr =>
-          effects.storage.saveLocalAttribute(attr, state[attr])
-        );
-        savedAttributes = attributes;
-      } else {
-        savedAttributes = [];
-      }
-      effects.storage.saveLocalAttribute('savedAttributes', savedAttributes);
-    },
-    restoreSavedAttrs(state) {
-      if (!state.devState.restoreState) return;
-      savedAttributes.forEach(
-        attr => (state[attr] = effects.storage.getLocalAttribute(attr))
-      );
-    },
+  saveAttr(attr, value) {}
 
-    makeReactions(app) {
-      if (attributes) attributes.forEach(attr => this.makeReaction(app, attr));
-    },
-    makeReaction(app, attr) {
-      app.reaction(
-        state => state[attr],
-        //Fix bug passing fragments
-        value => {
-          // console.log('saved ' + attr, value);
-          effects.storage.saveLocalAttribute(attr, value);
-        }
+  async saveAttrs() {
+    if (this.state.devState.saveState) {
+      this.attributes.forEach(attr =>
+        this.saveeLocalAttribute(attr, state[attr])
       );
-    },
+      this.savedAttributes = this.attributes;
+    } else {
+      this.savedAttributes = [];
+    }
+    this.saveLocalAttribute('savedAttributes', savedAttributes);
+  }
+  restoreSavedAttrs() {
+    if (!this.state.devState.restoreState) return;
+    this.savedAttributes.forEach(
+      attr => (state[attr] = this.getLocalAttribute(attr))
+    );
+  }
+
+  makeReactions(app) {
+    if (this.attributes)
+      this.attributes.forEach(attr => this.makeReaction(app, attr));
+  }
+  makeReaction(app, attr) {
+    //   app.reaction(
+    //     (this.state => this.state[attr]),
+    //     //Fix bug passing fragments
+    //     value => {`
+    //       // console.log('saved ' + attr, value);
+    //       effects.storage.saveLocalAttribute(attr, value);
+    //     }
+    //   );
+    // }
+  }
+  initProxy = ({ state, actions, effects }, instance) => {
+    // debugger
+    //  statemanager.process(state, actions, effects);
+    console.log('proxy', state);
+    // statemanager.restoreSavedAttrs(state)
+    this.initRoutine({ state, actions, effects }, instance);
+    // console.log("init complete")
+    // statemanager.saveAttrs();
   };
-})();
-
-let oldInitialize;
-
-const onInitializeProxy = ({ state, actions, effects }, instance) => {
-  // debugger
-  //  statemanager.process(state, actions, effects);
-  console.log('proxy', state);
-  // statemanager.restoreSavedAttrs(state)
-  oldInitialize({ state, actions, effects }, instance);
-  // console.log("init complete")
-  // statemanager.saveAttrs();
-};
+  setInit(initRoutine) {
+    this.initRoutine = initRoutine;
+  }
+}
 
 export const createOvermind = (config, options) => {
   // debugger
-  config.state.devState = statemanager.getDevState();
+  let statemanager = new StateManager(config);
   statemanager.computeScalarStates(config.state);
-  oldInitialize = config.onInitialize;
-  config.onInitialize = onInitializeProxy;
+  statemanager.setInit(config.onInitialize);
+  config.onInitialize = statemanager.initProxy.bind(statemanager);
 
   // console.log(config.state);
   let app = originalOvermind(config, options);

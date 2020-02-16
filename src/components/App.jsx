@@ -13,9 +13,8 @@ const App = () => {
     <React.Fragment>
       <section>
         <div>
-          {/* <header className="header">
-        </header> */}
-
+          Hello world
+          <header className="header" /> */}
           {/* <Title /> */}
           <MediaPlayer />
           <Controls />
