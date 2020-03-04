@@ -24,8 +24,8 @@ class StateManager {
   }
 
   /*Get the names of the state variables that are not functions
-    Must be called with state before createOvermind
-    Sets stateAttributes to this list if it is null */
+      Must be called with state before createOvermind
+      Sets stateAttributes to this list if it is null */
 
   async saveLocalAttribute(attr, value) {
     if (this.state.devState.logSave) console.log('saving ', attr, value);
@@ -44,19 +44,21 @@ class StateManager {
   }
 
   /* save the state and effects for use within this module
-    Restore all the attributes that have been saved, and 
-     */
+      Restore all the attributes that have been saved, and 
+      */
   process() {
-    console.log('process', context);
-    console.log('getState', context.state, state.devState.stateAttributes);
     //stateAttributes must have been set by call to computeScalarStates
-    this.attributes = state.devState.stateAttributes.split(',');
+    console.log('process');
+    this.attributes = this.state.devState.stateAttributes.split(',');
     this.savedAttributes = this.getLocalAttribute('savedAttributes');
     if (!this.savedAttributes) this.savedAttributes = [];
     if (!this.state.devState.restoreState) return;
-    this.savedAttributes.forEach(
-      attr => (this.state[attr] = this.getLocalAttribute(attr))
-    ); // await actions.restoreSavedAttrs();
+    this.savedAttributes.forEach(attr => {
+      let value = (this.state[attr] = this.getLocalAttribute(attr));
+
+      if (this.state.devState.logDiags.restore)
+        console.log('Restoring ', attr, value);
+    }); // await actions.restoreSavedAttrs();
     // this.restoreSavedAttrs();
   }
 
@@ -65,13 +67,13 @@ class StateManager {
   async saveAttrs() {
     if (this.state.devState.saveState) {
       this.attributes.forEach(attr =>
-        this.saveeLocalAttribute(attr, state[attr])
+        this.saveLocalAttribute(attr, this.state[attr])
       );
       this.savedAttributes = this.attributes;
     } else {
       this.savedAttributes = [];
     }
-    this.saveLocalAttribute('savedAttributes', savedAttributes);
+    this.saveLocalAttribute('savedAttributes', this.savedAttributes);
   }
   restoreSavedAttrs() {
     if (!this.state.devState.restoreState) return;
@@ -85,24 +87,26 @@ class StateManager {
       this.attributes.forEach(attr => this.makeReaction(app, attr));
   }
   makeReaction(app, attr) {
-    //   app.reaction(
-    //     (this.state => this.state[attr]),
-    //     //Fix bug passing fragments
-    //     value => {`
-    //       // console.log('saved ' + attr, value);
-    //       effects.storage.saveLocalAttribute(attr, value);
-    //     }
-    //   );
-    // }
+    console.log('make reaction for', attr);
+    const state = this.state;
+    app.reaction(
+      // this.state => this.state[attr],
+
+      state => state[attr],
+      //Fix bug passing fragments
+      value => {
+        console.log('saved ' + attr, value);
+        this.saveLocalAttribute(attr, value);
+      }
+    );
   }
   initProxy = ({ state, actions, effects }, instance) => {
     // debugger
-    //  statemanager.process(state, actions, effects);
     console.log('proxy', state);
     // statemanager.restoreSavedAttrs(state)
     this.initRoutine({ state, actions, effects }, instance);
     // console.log("init complete")
-    // statemanager.saveAttrs();
+    this.saveAttrs();
   };
   setInit(initRoutine) {
     this.initRoutine = initRoutine;
@@ -112,10 +116,22 @@ class StateManager {
 export const createOvermind = (config, options) => {
   // debugger
   let statemanager = new StateManager(config);
+  if (!config.state.devState)
+    config.state.devState = {
+      stateAttributes: null, //"title,fragments,fragmentIndex,mediaURL,mediaTime,userPlay,play,errorMessage,errorTimeout,nToConvert,nToPreserve",
+      //'fragments,fragmentIndex,mediaTime,userPlay,play,nToPreserve,nToConvert',
+      restoreState: true,
+      saveState: true,
+      logDiags: {
+        save: true,
+        restore: true,
+      },
+    };
+
   statemanager.computeScalarStates(config.state);
   statemanager.setInit(config.onInitialize);
   config.onInitialize = statemanager.initProxy.bind(statemanager);
-
+  statemanager.process();
   // console.log(config.state);
   let app = originalOvermind(config, options);
   // statemanager.saveAttrs(config);

@@ -36,11 +36,14 @@ export const translate = (() => {
     getMediaRef() {
       return mediaRef;
     },
+
     setMediaRef(ref) {
       mediaRef = ref;
     },
     getMediaTime() {
-      return mediaRef.getCurrentTime();
+      if (mediaRef) return mediaRef.getCurrentTime();
+      //TODO see if this is what we want to do
+      return null;
     },
 
     clearMediaTimeout(time) {

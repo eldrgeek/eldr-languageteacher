@@ -110,8 +110,12 @@ export const setPlay = ({ state, actions, effects }, play) => {
   }
 };
 
+export const setSeekLocation = ({ state, actions, effects }, location) => {
+  state.seekLocation = location;
+};
 export const timeoutTriggered = ({ state, effects, actions }) => {
-  const timeNow = effects.translate.getMediaTime();
+  let timeNow = effects.translate.getMediaTime();
+  if (timeNow === null) timeNow = state.mediaTime;
   const nextTime = state.nextFragmentTime;
   if (nextTime - timeNow < 0.5) {
     state.fragmentIndex++;
@@ -133,7 +137,9 @@ export const computeTimeout = ({ state, effects, actions }) => {
 };
 
 export const checkTransport = ({ state }, time) => {};
-export const seekToMediaTime = ({ state, effects }, time) => {
-  effects.translate.getMediaRef().seekTo(state.mediaTime, 'seconds');
+export const seekToMediaTime = ({ state, actions }) => {
+  // effects.translate.getMediaRef().seekTo(state.mediaTime, 'seconds');
+  console.log('set seek location', state.mediaTime);
+  actions.setSeekLocation(state.mediaTime);
 };
 //export const nextly = ({ state }, time) => {};

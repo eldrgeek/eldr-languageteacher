@@ -7,11 +7,20 @@ const style = {
 };
 
 const MediaPlayer = () => {
-  const { state, effects } = useApp();
+  const { state, effects, reaction } = useApp();
   const ref = React.createRef();
   React.useEffect(() => {
     effects.translate.setMediaRef(ref.current);
   });
+
+  React.useEffect(() =>
+    reaction(
+      ({ seekLocation }) => seekLocation,
+      seekLocation => {
+        ref.current.seekTo(seekLocation, 'seconds');
+      }
+    )
+  );
   const progress = progress => {
     // console.log(progress.playedSeconds);
     // if (ref && ref.current) console.log('REF', ref.current.getCurrentTime());
@@ -28,6 +37,7 @@ const MediaPlayer = () => {
         width="50vw"
         height="50vh"
         onProgress={progress}
+        // progressInterval={100}
         // onReady={() => console.log('ready now')}
       />
     </div>

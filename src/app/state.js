@@ -9,6 +9,7 @@ export const state = {
   mediaTime: 0,
   userPlay: false,
   play: false,
+  seekLocation: 0, //Location to seek to
   errorMessage: '',
   errorTimeout: 2000,
   nToConvert: 3,
@@ -30,5 +31,6 @@ export const state = {
     },
   },
 };
+
 state.fragments = fragments;
 //https://youtu.be/mq3I8qb1MM4////
